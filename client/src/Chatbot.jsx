@@ -1,34 +1,31 @@
 import React, { useState } from "react";
-import "./App.css"; // Mengimpor CSS untuk styling
+import "./App.css";
 
 const Chatbot = () => {
-    const [messages, setMessages] = useState([]); // Menyimpan pesan dalam state
-    const [userInput, setUserInput] = useState(""); // Menyimpan input user
-    const [isLoading, setIsLoading] = useState(false); // State untuk loading
+    const [messages, setMessages] = useState([]);
+    const [userInput, setUserInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const sendMessage = async () => {
         if (userInput.trim()) {
-            // Menambahkan pesan user ke dalam chat hanya sekali
             setMessages((prevMessages) => [
                 ...prevMessages,
                 { text: userInput, sender: "user" },
             ]);
 
-            setIsLoading(true); // Set loading state menjadi true sebelum mendapatkan response
+            setIsLoading(true);
 
             try {
-                // Mengirim permintaan ke backend Flask
                 const response = await fetch("http://localhost:5000/chat", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ question: userInput }), // Mengirim data input ke backend
+                    body: JSON.stringify({ question: userInput }),
                 });
 
-                const data = await response.json(); // Mengambil data respons dari server
+                const data = await response.json();
 
-                // Menambahkan respons chatbot ke dalam chat hanya sekali
                 setMessages((prevMessages) => [
                     ...prevMessages,
                     { text: data.response, sender: "bot" },
@@ -37,43 +34,60 @@ const Chatbot = () => {
                 console.error("Error fetching response:", error);
                 setMessages((prevMessages) => [
                     ...prevMessages,
-                    { text: "Maaf, terjadi kesalahan.", sender: "bot" },
+                    { text: "Sorry, something went wrong.", sender: "bot" },
                 ]);
             } finally {
-                setIsLoading(false); // Set loading state menjadi false setelah mendapatkan response
+                setIsLoading(false);
             }
 
-            // Reset input field
             setUserInput("");
         }
     };
 
-
     return (
-        <div className="chat-container">
+        <div className="chatbot-container">
+            <div className="chatbot-header">
+                <h1>Chatbot</h1>
+            </div>
             <div className="chat-box">
                 {messages.map((message, index) => (
                     <div
                         key={index}
-                        className={`message ${message.sender === "bot" ? "bot" : "user"}`}
+                        className={`message-wrapper ${message.sender === "bot" ? "bot" : "user"
+                            }`}
                     >
-                        {message.text}
+                        <img
+                            src={
+                                message.sender === "bot"
+                                    ? "/vite.svg"
+                                    : "/ProfilePicture.jpeg"
+                            }
+                            alt={`${message.sender}-avatar`}
+                            className="avatar"
+                        />
+                        <div className="message">{message.text}</div>
                     </div>
                 ))}
-
                 {isLoading && (
-                    <div className="message bot">Sedang memproses...</div> // Menampilkan loading saat chatbot sedang memproses
+                    <div className="message-wrapper bot">
+                        <img
+                            src="/vite.svg"
+                            alt="bot-avatar"
+                            className="avatar"
+                        />
+                        <div className="message loading">...</div>
+                    </div>
                 )}
             </div>
-
             <div className="input-container">
                 <input
                     type="text"
-                    placeholder="Tanya sesuatu..."
+                    placeholder="Ask something..."
                     value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)} // Update input
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && sendMessage()}
                 />
-                <button onClick={sendMessage}>Kirim</button>
+                <button onClick={sendMessage}>Send</button>
             </div>
         </div>
     );
