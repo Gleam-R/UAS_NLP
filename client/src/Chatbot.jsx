@@ -47,7 +47,7 @@ const Chatbot = () => {
     return (
         <div className="chatbot-container">
             <div className="chatbot-header">
-                <h1>Chatbot</h1>
+                <h1>Campus-Bot 1.0</h1>
             </div>
             <div className="chat-box">
                 {messages.map((message, index) => (
