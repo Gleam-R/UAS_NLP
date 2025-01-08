@@ -5,7 +5,10 @@
             "patterns": [
                 "Kapan jadwal TA?",
                 "Skripsi itu kapan?",
-                "TA dimulai kapan?"
+                "TA dimulai kapan?",
+                "Skripsi",
+                "Tugas Akhir",
+                "TA"
             ],
             "responses": [
                 "Jadwal TA bisa dilihat di website kampus."
@@ -16,7 +19,11 @@
             "patterns": [
                 "Bagaimana jadwal KP?",
                 "Magang kapan dimulai?",
-                "KP itu apa?"
+                "KP itu apa?",
+                "Kerja Praktek",
+                "KP",
+                "kp",
+                "Magang"
             ],
             "responses": [
                 "Jadwal KP bisa dilihat di portal mahasiswa."
@@ -27,11 +34,26 @@
             "patterns": [
                 "Jadwal kuliah kapan?",
                 "Kelas mulai jam berapa?",
-                "Kuliah itu kapan?"
+                "Kuliah itu kapan?",
+                "Kuliah",
+                "Kelas"
             ],
             "responses": [
                 "Jadwal kuliah tersedia di SIAKAD."
             ]
+        },
+        {
+            "tag": "jangan",
+            "patterns": [
+                "Jangan"
+            ],
+            "responses": [
+                "Mohon untuk tidak menggunakan kata 'Jangan'."
+            ]
         }
-    ]
+    ],
+    "identity": {
+        "name": "Chatbot Kampus",
+        "version": "1.0"
+    }
 }
