@@ -38,7 +38,7 @@ except Exception as e:
 stemmer = PorterStemmer()
 
 # Dictionary of correct words (you can expand this)
-word_dict = ["skripsi", "KP", "tugas akhir", "Jangan", "chatbot", "kuliah", "Kerja Praktek", "Kelas"]
+word_dict = ["skripsi", "tugas akhir", "Jangan", "chatbot", "kuliah", "Kerja Praktek", "Kelas"]
 
 def levenshtein(a, b):
     """Calculate Levenshtein Distance between two words."""
